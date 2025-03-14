@@ -1,0 +1,17 @@
+image: maven:latest
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - cd G15_backend
+    - mvn clean compile
+
+test:
+  stage: test
+  script:
+  - cd G15_backend
+  - mvn clean test
