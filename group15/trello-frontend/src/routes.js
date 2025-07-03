@@ -9,6 +9,7 @@ import Reset from "./pages/Reset";
 import TestHome from "./pages/TestHome";
 import TestWorkspaceCreate from "./pages/TestWorkspaceCreate";
 import BoardCreation from "./pages/BoardCreation";
+import BoardView from "./pages/BoardView";
 
 export default function Router() {
   const isAuthenticated = true;
@@ -48,6 +49,10 @@ export default function Router() {
         {
           path: "/workspace/:workspaceID/board-creation",
           element: <BoardCreation />
+        },
+        {
+          path: "board-demo",
+          element: <BoardView />
         },
       ],
     },

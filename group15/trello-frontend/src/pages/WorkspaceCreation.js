@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { Form, FormikProvider, useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { Typography, TextField, Button, Container, Box } from "@mui/material";
+import { Typography, TextField, Button, Container, Box, Paper } from "@mui/material";
 
 export default function WorkspaceCreation() {
   const WorkspaceCreationSchema = Yup.object().shape({
@@ -15,7 +15,7 @@ export default function WorkspaceCreation() {
   const formik = useFormik({
     initialValues: {
       workspaceName: "",
-      workspaceDescription: "",
+      workspaceDes: "",
     },
     validationSchema: WorkspaceCreationSchema,
     onSubmit: async (values) => {
@@ -48,75 +48,45 @@ export default function WorkspaceCreation() {
   };
 
   return (
-      <div>
-        <Container maxWidth="sm" style={{ backgroundColor: "rgb(255, 196, 196)" }}>
-          <Box my={4} style={{ padding: "1rem" }}>
-            <Typography variant="h4" component="h1" align="center" gutterBottom style={{ fontWeight: "bold" }}>
-              Let's build a Workspace
-            </Typography>
-
-            <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-              <p style={{ fontSize: "125%" }}>
-                Boost your productivity by making it easier for everyone to access boards in one location.
-              </p>
-            </div>
-
-            <FormikProvider value={formik}>
-              <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-                <TextField
-                    label="Workspace Name"
-                    fullWidth
-                    {...getFieldProps("workspaceName")}
-                    error={Boolean(touched.workspaceName && errors.workspaceName)}
-                    helperText={touched.workspaceName && errors.workspaceName}
-                    margin="normal"
-                />
-
-                <div>
-                  <p style={{ color: "grey" }}>This is the name of your company, team, or organization.</p>
-                </div>
-                <TextField
-                    label={
-                      <>
-                        Workspace Description{" "}
-                        <span style={{ color: "rgb(133, 14, 53)", fontSize: "80%" }}>Optional</span>
-                      </>
-                    }
-                    fullWidth
-                    {...getFieldProps("workspaceDes")}
-                    margin="normal"
-                />
-                <div>
-                  <p style={{ color: "grey" }}>Get your members on board with a few words about your Workspace.</p>
-                </div>
-
-                <Box display="flex" justifyContent="center" mt={2}>
-                  <Button
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      style={{
-                        margin: "auto",
-                        marginTop: "3%",
-                        fontSize: "120%",
-                        display: "block",
-                        backgroundColor: "rgb(238, 105, 131)",
-                      }}
-                  >
-                    Create
-                  </Button>
-                </Box>
-              </Form>
-            </FormikProvider>
-          </Box>
-
-          {/* Add your GIF image here */}
-          <img
-              src="/source.gif"
-              alt="Workspace GIF"
-              style={{ width: "100%", maxWidth: "500px", margin: "auto", display: "block" }}
-          />
-        </Container>
-      </div>
+    <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(120deg, #f7fafc 0%, #e3f0ff 100%)' }}>
+      <Paper elevation={6} sx={{ p: 3, borderRadius: 4, boxShadow: 3, minWidth: 370, maxWidth: 500, width: '100%' }}>
+        <Typography variant="h4" component="h1" align="center" gutterBottom fontWeight={700} color="primary">
+          Create a New Workspace
+        </Typography>
+        <Typography align="center" sx={{ mb: 3, color: '#555', fontSize: '1.1em' }}>
+          Enhance productivity by providing centralized access to all boards within your organization.
+        </Typography>
+        <FormikProvider value={formik}>
+          <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+            <TextField
+              label="Workspace Name"
+              fullWidth
+              {...getFieldProps("workspaceName")}
+              error={Boolean(touched.workspaceName && errors.workspaceName)}
+              helperText={touched.workspaceName && errors.workspaceName}
+              margin="normal"
+              sx={{ mb: 2, borderRadius: 2 }}
+            />
+            <TextField
+              label="Workspace Description (Optional)"
+              fullWidth
+              {...getFieldProps("workspaceDes")}
+              margin="normal"
+              sx={{ mb: 2, borderRadius: 2 }}
+            />
+            <Box display="flex" justifyContent="center" mt={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                sx={{ borderRadius: 3, fontWeight: 700, py: 1, px: 3 }}
+              >
+                Create
+              </Button>
+            </Box>
+          </Form>
+        </FormikProvider>
+      </Paper>
+    </Box>
   );
 }

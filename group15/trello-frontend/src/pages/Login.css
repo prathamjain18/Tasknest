@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to right, #4285f4, #ea4335, #fbbc05, #34a853);
+    background: linear-gradient(120deg, #e3f0ff 0%, #f4f6fb 100%);
 }
 
 .content {
@@ -11,45 +11,58 @@
 }
 
 .title {
-    margin-bottom: 40px;
-    font-family: "Product Sans", Arial, sans-serif;
-    font-size: 60px;
-    font-weight: bold;
-    font-style: italic;
-    color: #000;
+    margin-bottom: 32px;
+    font-size: 48px;
+    font-weight: 800;
+    color: #1976d2;
+    letter-spacing: 1px;
 }
 
 .colorful-text {
     display: inline-block;
-    font-weight: bold;
-    font-style: italic;
-    background: linear-gradient(to right, #4285f4, #ea4335, #fbbc05, #34a853);
+    font-weight: 700;
+    background: linear-gradient(90deg, #1976d2, #ff4081, #64b5f6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .form {
-    width: 400px;
-    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    padding: 48px 36px;
     background-color: #fff;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
+    box-shadow: 0 4px 24px rgba(25, 118, 210, 0.08);
+    border-radius: 20px;
+    margin: 0 auto;
 }
 
 .field {
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .error {
     color: #f44336;
     margin-top: 5px;
+    font-size: 0.95em;
 }
 
 .link {
-    color: #fff;
+    color: #1976d2;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.link:hover {
+    color: #0d47a1;
+    text-decoration: underline;
 }
 
 .submit-button {
-    margin-top: 20px;
+    margin-top: 24px;
+    width: 100%;
+    font-size: 1.1em;
+    font-weight: 700;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
 }
 

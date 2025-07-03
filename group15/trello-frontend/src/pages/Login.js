@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Container, TextField, Typography, Link } from "@mui/material";
+import { Container, TextField, Typography, Link, Card, CardContent, Box, Avatar, Paper } from "@mui/material";
 import { Form, FormikProvider, useFormik } from "formik";
 import { Button, CircularProgress } from "@mui/material";
 import { useDispatch } from "react-redux";
@@ -102,69 +102,69 @@ export default function Login() {
     const { errors, touched, handleSubmit, getFieldProps } = formik;
 
     return (
-        <div className="container">
-            <div className="content">
-                <Typography variant="h3" component="h1" className="title">
-                Tasknest
-                </Typography>
-
-                <Container>
-                    <FormikProvider value={formik}>
-                        <Form className="form" autoComplete="off" noValidate onSubmit={handleSubmit}>
-                            <TextField
-                                fullWidth
-                                label="Email"
-                                className="field"
-                                {...getFieldProps("email")}
-                                error={Boolean(touched.email && errors.email)}
-                                helperText={touched.email && errors.email}
-                            />
-                            <TextField
-                                fullWidth
-                                label="Password"
-                                type="password"
-                                className="field"
-                                {...getFieldProps("password")}
-                                error={Boolean(touched.password && errors.password)}
-                                helperText={touched.password && errors.password}
-                            />
-
-                            {passwordIncorrect && (
-                                <Typography color="error" className="error">
-                                    Password incorrect. Please try again or{" "}
-                                    <Link component={RouterLink} to="/reset-password" className="link">
-                                        reset your password
-                                    </Link>
-                                    .
-                                </Typography>
-                            )}
-
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                disabled={loading}
-                                className="submit-button"
-                            >
-                                {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
-                            </Button>
-                        </Form>
-                    </FormikProvider>
-                </Container>
-
-                <Typography>
-                    <Link component={RouterLink} to="/Reset" className="link" style={{ color: "#fff" }}>
+        <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(120deg, #f7fafc 0%, #e3f0ff 100%)' }}>
+            <Paper elevation={6} sx={{ p: 3, borderRadius: 4, boxShadow: 3, minWidth: 370, maxWidth: 400, width: '100%', boxShadow: '0 4px 32px rgba(25, 118, 210, 0.10)' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+                    <Avatar src={process.env.PUBLIC_URL + '/logo192.png'} sx={{ width: 64, height: 64, mb: 1, bgcolor: 'primary.main' }} />
+                    <Typography variant="h4" component="h1" fontWeight={700} color="primary" gutterBottom>
+                        Tasknest
+                    </Typography>
+                </Box>
+                <FormikProvider value={formik}>
+                    <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+                        <TextField
+                            fullWidth
+                            label="Email"
+                            margin="normal"
+                            {...getFieldProps("email")}
+                            error={Boolean(touched.email && errors.email)}
+                            helperText={touched.email && errors.email}
+                            sx={{ mb: 2, borderRadius: 2 }}
+                        />
+                        <TextField
+                            fullWidth
+                            label="Password"
+                            type="password"
+                            margin="normal"
+                            {...getFieldProps("password")}
+                            error={Boolean(touched.password && errors.password)}
+                            helperText={touched.password && errors.password}
+                            sx={{ mb: 2, borderRadius: 2 }}
+                        />
+                        {passwordIncorrect && (
+                            <Typography color="error" sx={{ mt: 1 }}>
+                                Password incorrect. Please try again or{' '}
+                                <Link component={RouterLink} to="/reset-password" color="primary">
+                                    reset your password
+                                </Link>.
+                            </Typography>
+                        )}
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            disabled={loading}
+                            sx={{ borderRadius: 3, fontWeight: 700, py: 1, px: 3, mt: 2, mb: 1 }}
+                        >
+                            {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
+                        </Button>
+                    </Form>
+                </FormikProvider>
+                <Box sx={{ mt: 2, textAlign: 'center' }}>
+                    <Link component={RouterLink} to="/Reset" color="primary" underline="hover">
                         Reset Password
                     </Link>
-                </Typography>
-                <Typography>
-                    Don't have an account?{" "}
-                    <Link component={RouterLink} to="/Register" className="link" style={{ color: "#fff" }}>
-                        Register
-                    </Link>
-                </Typography>
-            </div>
-        </div>
+                </Box>
+                <Box sx={{ mt: 1, textAlign: 'center' }}>
+                    <Typography variant="body2">
+                        Don't have an account?{' '}
+                        <Link component={RouterLink} to="/Register" color="primary" underline="hover">
+                            Register
+                        </Link>
+                    </Typography>
+                </Box>
+            </Paper>
+        </Box>
     );
 }
 

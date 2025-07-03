@@ -1,6 +1,6 @@
 import React from "react";
 import * as Yup from "yup";
-import { Container, MenuItem, TextField, Typography } from "@mui/material";
+import { Container, MenuItem, TextField, Typography, Box } from "@mui/material";
 import { Form, FormikProvider, useFormik } from "formik";
 import { LoadingButton } from "@mui/lab";
 import { useState } from "react";
@@ -85,6 +85,7 @@ const Reset = () => {
                             {...getFieldProps("email")}
                             error={Boolean(touched.email && errors.email)}
                             helperText={touched.email && errors.email}
+                            sx={{ mb: 2, borderRadius: 2 }}
                         />
                         <TextField
                             fullWidth
@@ -93,6 +94,7 @@ const Reset = () => {
                             {...getFieldProps("newPassword")}
                             error={Boolean(touched.newPassword && errors.newPassword)}
                             helperText={touched.newPassword && errors.newPassword}
+                            sx={{ mb: 2, borderRadius: 2 }}
                         />
                         <TextField
                             fullWidth
@@ -101,6 +103,7 @@ const Reset = () => {
                             {...getFieldProps("confirmPassword")}
                             error={Boolean(touched.confirmPassword && errors.confirmPassword)}
                             helperText={touched.confirmPassword && errors.confirmPassword}
+                            sx={{ mb: 2, borderRadius: 2 }}
                         />
 
                         <TextField
@@ -110,6 +113,7 @@ const Reset = () => {
                             {...getFieldProps("securityQuestion")}
                             error={Boolean(touched.securityQuestion && errors.securityQuestion)}
                             helperText={touched.securityQuestion && errors.securityQuestion}
+                            sx={{ mb: 2, borderRadius: 2 }}
                         >
                             {securityQuestions.map((question) => (
                                 <MenuItem key={question.value} value={question.value}>
@@ -124,6 +128,7 @@ const Reset = () => {
                             {...getFieldProps("securityAnswer")}
                             error={Boolean(touched.securityAnswer && errors.securityAnswer)}
                             helperText={touched.securityAnswer && errors.securityAnswer}
+                            sx={{ mb: 2, borderRadius: 2 }}
                         />
 
                         <LoadingButton
@@ -131,6 +136,7 @@ const Reset = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
+                            sx={{ borderRadius: 3, fontWeight: 700, py: 1, px: 3 }}
                         >
                             Confirm
                         </LoadingButton>

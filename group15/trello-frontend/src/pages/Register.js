@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Container, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Container, MenuItem, Select, TextField, Typography, Box } from "@mui/material";
 import { Form, FormikProvider, useFormik } from "formik";
 import { LoadingButton } from "@mui/lab";
 import { useDispatch } from "react-redux";
@@ -85,6 +85,7 @@ export default function Register() {
                         {...getFieldProps("email")}
                         error={Boolean(touched.email && errors.email)}
                         helperText={touched.email && errors.email}
+                        sx={{ mb: 2, borderRadius: 2 }}
                     />
                     <TextField
                         fullWidth
@@ -92,6 +93,7 @@ export default function Register() {
                         {...getFieldProps("password")}
                         error={Boolean(touched.password && errors.password)}
                         helperText={touched.password && errors.password}
+                        sx={{ mb: 2, borderRadius: 2 }}
                     />
 
                     <Select
@@ -102,6 +104,7 @@ export default function Register() {
                         {...getFieldProps("userType")}
                         error={Boolean(touched.userType && errors.userType)}
                         helperText={touched.userType && errors.userType}
+                        sx={{ mb: 2, borderRadius: 2 }}
                     >
                         <MenuItem value="">Select Type</MenuItem>
                         <MenuItem value="Student">Student</MenuItem>
@@ -116,6 +119,7 @@ export default function Register() {
                         {...getFieldProps("securityQuestion")}
                         error={Boolean(touched.securityQuestion && errors.securityQuestion)}
                         helperText={touched.securityQuestion && errors.securityQuestion}
+                        sx={{ mb: 2, borderRadius: 2 }}
                     >
                         <MenuItem value="">Select Type</MenuItem>
                         <MenuItem value="What is your favorite movie?">What is your favorite movie?</MenuItem>
@@ -128,9 +132,10 @@ export default function Register() {
                         {...getFieldProps("securityAnswer")}
                         error={Boolean(touched.securityAnswer && errors.securityAnswer)}
                         helperText={touched.securityAnswer && errors.securityAnswer}
+                        sx={{ mb: 2, borderRadius: 2 }}
                     />
 
-                    <LoadingButton loading={isSubmitting} type="submit" fullWidth variant="contained">
+                    <LoadingButton loading={isSubmitting} type="submit" fullWidth variant="contained" sx={{ borderRadius: 3, fontWeight: 700, py: 1, px: 3 }}>
                         Register
                     </LoadingButton>
                 </Form>

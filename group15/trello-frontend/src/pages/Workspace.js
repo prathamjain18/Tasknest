@@ -1,8 +1,10 @@
-import { Button, TextField, MenuItem } from "@mui/material";
+import { Button, TextField, MenuItem, Paper, Card, CardContent, Typography, Box, Grid, IconButton, Tooltip, Container } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Card, CardContent } from "@mui/material";
 import axios from "axios";
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function WorkspacePage() {
   const { workspaceID } = useParams();
@@ -222,254 +224,152 @@ export default function WorkspacePage() {
     return <div>Loading...</div>;
   }
 
-  // Styles for UI elements
-  const memberStyle = {
-    fontSize: "120%",
-    fontWeight: "bold",
-    color: "#555",
-    margin: "8px 0",
-    fontFamily: "sans-serif",
-    textTransform: "uppercase",
-  };
-
-  const boardTitleStyle = {
-    fontSize: "160%",
-    fontWeight: "bold",
-    color: "#fff",
-    margin: "8px 0",
-    fontFamily: "Georgia, serif",
-    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-  };
-
-  const buttonStyle = {
-    margin: "auto",
-    marginTop: "3%",
-    fontSize: "180%",
-    display: "block",
-    backgroundColor: "rgb(255, 196, 196)",
-    fontFamily: "serif",
-  };
-
   return (
-    <div>
-      {/* Workspace Header */}
-      <div style={{ backgroundColor: "rgb(238, 105, 131)" }}>
-        <h1 style={{ textAlign: "center" }}>Add boards to your workspace!</h1>
-        <p style={{ textAlign: "center", fontSize: "160%" }}>
-          Workspace: {workspace.workspaceName}
-        </p>
-      </div>
-
-      {/* Add Member Button */}
-      <button style={buttonStyle} onClick={addMember}>
-        Add Member
-      </button>
-
-      {/* Display Members */}
-      <div style={{ marginTop: "3%", textAlign: "center" }}>
-        {members.map((member) => (
-          <div key={member.id}>
-            <p style={memberStyle}>{member.name}</p>
-            <button onClick={() => deleteMember(member.id)}>Remove</button>
-          </div>
-        ))}
-      </div>
-
-      {/* Add Board Form */}
-      <div style={{ textAlign: "center" }}>
-        <TextField
-          label="Board Name"
-          value={boardName}
-          onChange={(e) => setBoardName(e.target.value)}
-        />
-        <button style={buttonStyle} onClick={handleCreateBoard}>
-          Add Board
-        </button>
-      </div>
-
-      {/* Search Box */}
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <TextField
-          label="Search Task Name"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
-
-      {/* Filter Buttons */}
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <Button
-          variant={filterType === "all" ? "contained" : "outlined"}
-          onClick={() => setFilterType("all")}
-          style={{ margin: "4px" }}
-        >
-          All Tasks
-        </Button>
-        <Button
-          variant={filterType === "dueToday" ? "contained" : "outlined"}
-          onClick={() => setFilterType("dueToday")}
-          style={{ margin: "4px" }}
-        >
-          Due Today
-        </Button>
-        <Button
-          variant={filterType === "dueThisWeek" ? "contained" : "outlined"}
-          onClick={() => setFilterType("dueThisWeek")}
-          style={{ margin: "4px" }}
-        >
-          Due This Week
-        </Button>
-        <Button
-          variant={filterType === "overdue" ? "contained" : "outlined"}
-          onClick={() => setFilterType("overdue")}
-          style={{ margin: "4px" }}
-        >
-          Overdue
-        </Button>
-      </div>
-
-      {/* Display Boards */}
-      <div
-        style={{
-          textAlign: "center",
-          display: "flex",
-          flexWrap: "wrap",
-          maxWidth: "1200px",
-          margin: "0 auto",
-        }}
-      >
-        {boards.map((board) => (
-          <div
-            key={board.boardID}
-            style={{ flex: "0 0 calc(25% - 8px)", margin: "4px" }}
-          >
-            <Card
-              style={{
-                backgroundColor: "rgb(238, 105, 131)",
-                height: "600px",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <CardContent>
-                {/* Board Title */}
-                <p style={boardTitleStyle}>{board.boardName}</p>
-                {/* Button to change board title */}
-                <Button
-                  style={buttonStyle}
-                  onClick={() =>
-                    handleBoardNameChange(board.boardID, board.boardName)
-                  }
-                >
-                  Change Name
-                </Button>
-              </CardContent>
-              <div style={{ padding: "8px 16px" }}>
-                {/* Task Name Input */}
-                <TextField
-                  label="Task Name"
-                  value={taskNames[board.boardID] || ""}
-                  onChange={(e) =>
-                    setTaskNames((prevTaskNames) => ({
-                      ...prevTaskNames,
-                      [board.boardID]: e.target.value,
-                    }))
-                  }
-                  style={{ width: "100%" }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "8px 16px",
-                }}
-              >
-                <div style={{ flex: 1, width: "50%" }}>
-                  {/* Due Date Input */}
-                  <TextField
-                    label="Due Date"
-                    type="date"
-                    value={newTaskDueDate}
-                    onChange={(e) => setNewTaskDueDate(e.target.value)}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    style={{ width: "100%" }}
-                  />
-                </div>
-                <div style={{ flex: 1, width: "50%", marginLeft: "16px" }}>
-                  {/* Assigned Member Dropdown */}
-                  <TextField
-                    select
-                    label="Assign Member"
-                    value={selectedMember}
-                    onChange={(e) => setSelectedMember(e.target.value)}
-                    SelectProps={{
-                      displayEmpty: true,
-                    }}
-                    style={{ width: "100%" }}
-                  >
-                    {members.map((member) => (
-                      <MenuItem key={member.id} value={member.name}>
-                        {member.name}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </div>
-              </div>
-              {/* Add Task Button */}
-              <Button
-                style={buttonStyle}
-                onClick={() => addTask(board.boardID, taskNames[board.boardID])}
-              >
-                Add Task
+    <Box sx={{ minHeight: '100vh', background: 'linear-gradient(120deg, #f7fafc 0%, #e3f0ff 100%)', p: 3 }}>
+      <Container maxWidth="lg">
+        <Typography variant="h4" fontWeight={700} color="primary" gutterBottom align="center" sx={{ mb: 4 }}>
+          Workspace
+        </Typography>
+        <Paper elevation={3} sx={{ p: 3, borderRadius: 4, mb: 4 }}>
+          <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
+            <Typography variant="h5" fontWeight={600}>
+              Boards
+            </Typography>
+            <Box display="flex" alignItems="center">
+              <TextField
+                label="New Board Name"
+                size="small"
+                value={boardName}
+                onChange={e => setBoardName(e.target.value)}
+                sx={{ mr: 2, minWidth: 200 }}
+              />
+              <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={handleCreateBoard} sx={{ borderRadius: 2, fontWeight: 600 }}>
+                Add Board
               </Button>
-              <div style={{ flex: 1, overflowY: "scroll" }}>
-                {/* Display Tasks */}
-                {filteredTasks(board).map((task) => (
-                  <Card
-                    key={task.id}
-                    style={{
-                      margin: "8px 0",
-                      backgroundColor: "rgb(255, 230, 230)",
-                      textDecoration:
-                        task.status === "completed" ? "line-through" : "none",
-                    }}
-                  >
-                    <CardContent>
-                      <p style={{ fontWeight: "bold" }}>{task.taskName}</p>
-                      <p>Status: {task.taskStatus}</p>
-                      <p>Due Date: {task.dueDate}</p>
-                    </CardContent>
-                    <Button
-                      onClick={() =>
-                        handleTaskStatusChange(
-                          board.boardID,
-                          task.id,
-                          task.taskStatus === "completed"
-                            ? "to-do"
-                            : "completed"
-                        )
-                      }
-                    >
-                      Mark{" "}
-                      {task.taskStatus === "completed" ? "To-do" : "Completed"}
-                    </Button>
-                  </Card>
-                ))}
-              </div>
-              {/* Delete Board Button */}
-              <Button
-                style={buttonStyle}
-                onClick={() => deleteBoard(board.boardID)}
-              >
-                Delete Board
-              </Button>
-            </Card>
-          </div>
-        ))}
-      </div>
-    </div>
+            </Box>
+          </Box>
+          <Grid container spacing={3}>
+            {boards.map(board => (
+              <Grid item xs={12} sm={6} md={4} key={board.boardID}>
+                <Card elevation={2} sx={{ borderRadius: 3, p: 2, bgcolor: '#fff', boxShadow: '0 2px 8px rgba(25, 118, 210, 0.08)' }}>
+                  <CardContent>
+                    <Box display="flex" alignItems="center" justifyContent="space-between">
+                      <Typography variant="h6" fontWeight={600} color="primary.main">
+                        {board.boardName}
+                      </Typography>
+                      <Box>
+                        <Tooltip title="Edit Board Name">
+                          <IconButton size="small" color="primary" onClick={() => handleBoardNameChange(board.boardID, board.boardName)}>
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete Board">
+                          <IconButton size="small" color="error" onClick={() => deleteBoard(board.boardID)}>
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </Box>
+                    {/* Task List */}
+                    <Box mt={2}>
+                      <Typography variant="subtitle1" fontWeight={500} gutterBottom>
+                        Tasks
+                      </Typography>
+                      <Box display="flex" alignItems="center" mb={1}>
+                        <TextField
+                          label="New Task"
+                          size="small"
+                          value={taskNames[board.boardID] || ''}
+                          onChange={e => setTaskNames({ ...taskNames, [board.boardID]: e.target.value })}
+                          sx={{ mr: 1 }}
+                        />
+                        <TextField
+                          label="Due Date"
+                          type="date"
+                          size="small"
+                          value={newTaskDueDate}
+                          onChange={e => setNewTaskDueDate(e.target.value)}
+                          sx={{ mr: 1 }}
+                          InputLabelProps={{ shrink: true }}
+                        />
+                        <Button variant="contained" color="success" size="small" onClick={() => addTask(board.boardID, taskNames[board.boardID])} sx={{ borderRadius: 2 }}>
+                          Add
+                        </Button>
+                      </Box>
+                      {/* Task Filtering */}
+                      <TextField
+                        label="Search Tasks"
+                        size="small"
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        sx={{ mb: 1, width: '100%' }}
+                      />
+                      <TextField
+                        select
+                        label="Filter"
+                        size="small"
+                        value={filterType}
+                        onChange={e => setFilterType(e.target.value)}
+                        sx={{ mb: 2, width: '100%' }}
+                      >
+                        <MenuItem value="all">All</MenuItem>
+                        <MenuItem value="dueToday">Due Today</MenuItem>
+                        <MenuItem value="dueThisWeek">Due This Week</MenuItem>
+                        <MenuItem value="overdue">Overdue</MenuItem>
+                      </TextField>
+                      <Box>
+                        {filteredTasks(board).map(task => (
+                          <Paper key={task.id} elevation={1} sx={{ p: 1.5, mb: 1, borderRadius: 2, bgcolor: '#f7fafc', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <Box>
+                              <Typography fontWeight={500}>{task.taskName}</Typography>
+                              <Typography variant="caption" color="text.secondary">Due: {task.dueDate}</Typography>
+                            </Box>
+                            <TextField
+                              select
+                              size="small"
+                              value={task.taskStatus}
+                              onChange={e => handleTaskStatusChange(board.boardID, task.id, e.target.value)}
+                              sx={{ minWidth: 100 }}
+                            >
+                              <MenuItem value="to-do">To Do</MenuItem>
+                              <MenuItem value="in-progress">In Progress</MenuItem>
+                              <MenuItem value="done">Done</MenuItem>
+                            </TextField>
+                          </Paper>
+                        ))}
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Paper>
+        {/* Members Section */}
+        <Paper elevation={3} sx={{ p: 3, borderRadius: 4 }}>
+          <Typography variant="h5" fontWeight={600} gutterBottom>
+            Members
+          </Typography>
+          <Box display="flex" alignItems="center" mb={2}>
+            <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={addMember} sx={{ borderRadius: 2, fontWeight: 600, mr: 2 }}>
+              Add Member
+            </Button>
+            <TextField label="Search Members" size="small" sx={{ minWidth: 200 }} />
+          </Box>
+          <Grid container spacing={2}>
+            {members.map(member => (
+              <Grid item xs={12} sm={6} md={4} key={member.id}>
+                <Paper elevation={1} sx={{ p: 2, borderRadius: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Typography>{member.name}</Typography>
+                  <IconButton color="error" onClick={() => deleteMember(member.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Paper>
+      </Container>
+    </Box>
   );
 }

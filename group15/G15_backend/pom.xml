@@ -8,11 +8,11 @@
 		<version>3.1.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.csci3130_g15</groupId>
-	<artifactId>G15_backend</artifactId>
+	<groupId>com.tasknest</groupId>
+	<artifactId>tasknest-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>G15_backend</name>
-	<description>CSCI3130 Group 15 team project</description>
+	<name>tasknest-backend</name>
+	<description>Tasknest project by Pratham</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
